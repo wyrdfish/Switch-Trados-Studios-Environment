@@ -16,6 +16,7 @@ namespace Switch_Trados_Studios_Environment
 
         private static string _machineUser = Environment.UserName;
         private const string LanguageCloudMachineTranslation = "LanguageCloudMachineTranslation.bin";
+        private const string TradosStudioConfigFile = "SDLTradosStudio.exe.config";
         private const string BestMatchServiceSettingsNode = "/configuration/BestMatchServiceSettings";
         private const string BestMatchServiceUrlsConfigNode = "/configuration/BestMatchServiceUrlsConfig";
         private const string SdlInstallRegistryPath = @"SOFTWARE\WOW6432Node\SDL";
@@ -37,6 +38,8 @@ namespace Switch_Trados_Studios_Environment
             var dialog = new OpenFileDialog();
             try
             {
+                //dialog.IsFolderPicker = true;
+                //dialog.EnsurePathExists = true;
                 dialog.ShowDialog();
                 return dialog.FileName;
             }
@@ -56,7 +59,7 @@ namespace Switch_Trados_Studios_Environment
             XmlDocument tradosStudioConfigFile = new XmlDocument();
             string lcEnvironmentFilePath = nrOfStudioBuilds <= selectedStudioTypIndexe ? 
                 studioBuildTypeDictionary[selectedStudioTypIndexe] : 
-                GetInstallPathToTheSpecificStudioBuild(selectedStudioTypIndexe);
+                Path.Combine(GetInstallPathToTheSpecificStudioBuild(selectedStudioTypIndexe), TradosStudioConfigFile);
             
             tradosStudioConfigFile.Load(lcEnvironmentFilePath);
             var oldBestMatchServiceSettings = tradosStudioConfigFile.SelectSingleNode(BestMatchServiceSettingsNode);
