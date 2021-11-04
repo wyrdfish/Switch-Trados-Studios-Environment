@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>Switch_Trados_Studios_Environment</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Switch.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="computer-icons-arrow-switch-volume-icon-png-clip-art.jpg" />
+    <None Remove="computer-icons-arrow-switch-volume-icon-png-clip-art.png" />
+    <None Remove="pngwave.png" />
+    <None Remove="Switch.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="computer-icons-arrow-switch-volume-icon-png-clip-art.jpg" />
+    <Resource Include="computer-icons-arrow-switch-volume-icon-png-clip-art.png" />
+    <Resource Include="pngwave.png" />
+    <Resource Include="Switch.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+  </ItemGroup> 
+
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>Switch_Trados_Studios_Environment</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>ico\Switch.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Nullable>annotations</Nullable>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="pngwave.png" />
+    <None Remove="Switch.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="pngwave.png" />
+    <Resource Include="Switch.png" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /i /y &quot;$(ProjectDir)Environment Files&quot; &quot;$(ProjectDir)$(OutDir)Environment Files&quot;" />
+  </Target>
+  
+</Project>

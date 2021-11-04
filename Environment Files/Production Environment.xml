@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<BestMatchServiceSettings>
+    <tracking>
+      <setting name="applicationKey" value="n6JUV2wjQeKOVB0muXqL0Q%3D%3D" />
+    </tracking>
+    <auth0>
+      <setting name="clientId" value="LxQFbTZxk2Pc7mg0N4RfIOp2WCeypuzN" />
+      <setting name="audience" value="https://api.sdl.com" />
+    </auth0>
+  </BestMatchServiceSettings>
+  <BestMatchServiceUrlsConfig login="https://lc-api.sdl.com" logout="http://languagecloud.sdl.com/lc/logout" auth0="https://sdl-prod.eu.auth0.com">
+    <translationToolkit url="https://languagecloud.sdl.com/lc/">
+      <alternate lang="de" url="https://languagecloud.sdl.com/de/lc/" />
+      <alternate lang="fr" url="https://languagecloud.sdl.com/fr/lc/" />
+      <alternate lang="es" url="https://languagecloud.sdl.com/es/lc/" />
+      <alternate lang="ja" url="https://languagecloud.sdl.com/ja/lc/" />
+      <alternate lang="it" url="https://languagecloud.sdl.com/it/lc/" />
+      <alternate lang="ko-KR" url="https://languagecloud.sdl.com/kr/lc/" />
+      <alternate lang="zh-CN" url="https://languagecloud.sdl.com/zh/lc/" />
+    </translationToolkit>
+    <HavingTroubleSigningIn url="https://gateway.sdl.com/apex/communityknowledge?articleName=How-to-reset-your-password-for-your-My-SDL-Account" />
+  </BestMatchServiceUrlsConfig>
+</configuration>
