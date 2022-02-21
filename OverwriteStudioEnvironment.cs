@@ -20,17 +20,26 @@ namespace Switch_Trados_Studios_Environment
         private const string BestMatchServiceSettingsNode = "/configuration/BestMatchServiceSettings";
         private const string BestMatchServiceUrlsConfigNode = "/configuration/BestMatchServiceUrlsConfig";
         private const string SdlInstallRegistryPath = @"SOFTWARE\WOW6432Node\SDL";
+        private const string TradosInstallRegistryPath = @"SOFTWARE\WOW6432Node\Trados";
 
-        public string[] GetListOfInstalledTradosStudioBuilds()
+        public List<string> GetListOfInstalledTradosStudioBuilds()
         {
             RegistryKey SdlInstallRegistry = Registry.LocalMachine.OpenSubKey(SdlInstallRegistryPath);
+            RegistryKey TradosInstallRegistry = Registry.LocalMachine.OpenSubKey(TradosInstallRegistryPath);
+            List<string> listOfInstalledBuilds = new List<string>();
             if (SdlInstallRegistry != null)
             {
                 var installedStudioBuilds = SdlInstallRegistry.GetSubKeyNames()
-                .Where<string>(val => (val.Contains("Studio16") || val.Contains("Studio15")) && !val.Contains("License")).ToArray();
-                return installedStudioBuilds;
+               .Where<string>(val => (val.Contains("Studio16") || val.Contains("Studio17")) && !val.Contains("License")).ToList();
+                listOfInstalledBuilds.AddRange(installedStudioBuilds);
             }
-            return new string[0];
+            if (TradosInstallRegistry != null)
+            {
+                var installedStudioBuilds = TradosInstallRegistry.GetSubKeyNames()
+               .Where<string>(val => (val.Contains("Studio16") || val.Contains("Studio17")) && !val.Contains("License")).ToList();
+                listOfInstalledBuilds.AddRange(installedStudioBuilds);
+            }
+            return listOfInstalledBuilds;
         }
 
         public string ChooseCustomLocation()
@@ -90,7 +99,8 @@ namespace Switch_Trados_Studios_Environment
 
         public string GetInstallPathToTheSpecificStudioBuild(int studioBuildType)
         {
-            string buildRegistryKeyPath = Path.Combine(SdlInstallRegistryPath, studioBuildTypeDictionary[studioBuildType]);
+            string StudioInstallRegistryPath = studioBuildTypeDictionary[studioBuildType].Contains("17") ? TradosInstallRegistryPath : SdlInstallRegistryPath;
+            string buildRegistryKeyPath = Path.Combine(StudioInstallRegistryPath, studioBuildTypeDictionary[studioBuildType]);
             RegistryKey SdlInstallRegistry = Registry.LocalMachine.OpenSubKey(buildRegistryKeyPath);
             var installLocation = SdlInstallRegistry.GetValue("InstallLocation");
             return (string)installLocation;
@@ -147,16 +157,14 @@ namespace Switch_Trados_Studios_Environment
 
         public void DeleteLanguageCloudLoggedInCofig(int studioBuildType)
         {
-            string buildType = nrOfStudioBuilds <= studioBuildType ? "Studio16" : studioBuildTypeDictionary[studioBuildType];
-            string loginFileLocation = string.Format(@"C:\Users\{0}\AppData\Roaming\SDL\SDL Trados Studio\{1}\{2}", _machineUser, buildType, LanguageCloudMachineTranslation);
+            string buildType = nrOfStudioBuilds <= studioBuildType ? "Studio17" : studioBuildTypeDictionary[studioBuildType];
+            string loginFileLocation = $@"C:\Users\{_machineUser}\AppData\Roaming\Trados\Trados Studio\{buildType}\{LanguageCloudMachineTranslation}";
             try
             {
                 FileInfo fileInfo = new FileInfo(loginFileLocation);
                 fileInfo.Delete();
             }
-#pragma warning disable RCS1075 // Avoid empty catch clause that catches System.Exception.
-            catch (Exception) { }
-#pragma warning restore RCS1075 // Avoid empty catch clause that catches System.Exception.
+            finally { };
         }
     }
 }

@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Switch_Trados_Studios_Environment
 {
@@ -41,11 +32,11 @@ namespace Switch_Trados_Studios_Environment
                 comboBoxItem.Content = build;
                 StudioBuildType.Items.Add(comboBoxItem);
             }
-            if (availableStudioBuilds.Length == 1)
+            if (availableStudioBuilds.Count == 1)
             {
                 StudioBuildType.SelectedIndex = 0;
             }
-            else if (availableStudioBuilds.Length == 0)
+            else if (availableStudioBuilds.Count == 0)
             {
                 const string message = "There isn't any Trados Studio Build installed\n\nPlease Install one and restart the tool or add a custom path";
                 Status.Visibility = Visibility.Visible;
