@@ -157,8 +157,10 @@ namespace Switch_Trados_Studios_Environment
 
         public void DeleteLanguageCloudLoggedInCofig(int studioBuildType)
         {
-            string buildType = nrOfStudioBuilds <= studioBuildType ? "Studio17" : studioBuildTypeDictionary[studioBuildType];
-            string loginFileLocation = $@"C:\Users\{_machineUser}\AppData\Roaming\Trados\Trados Studio\{buildType}\{LanguageCloudMachineTranslation}";
+            string studioBuild = studioBuildTypeDictionary[studioBuildType];
+            string languageCloudMachineTranslationLocation = studioBuild.Contains("17") ? @"Trados\Trados Studio" : @"SDL\SDL Trados Studio";
+            string buildType = nrOfStudioBuilds <= studioBuildType ? "Studio17" : studioBuild;
+            string loginFileLocation = $@"C:\Users\{_machineUser}\AppData\Roaming\{languageCloudMachineTranslationLocation}\{buildType}\{LanguageCloudMachineTranslation}";
             try
             {
                 FileInfo fileInfo = new FileInfo(loginFileLocation);
