@@ -33,10 +33,12 @@ namespace Switch_Trados_Studios_Environment
             var oldBestMatchServiceUrlConfig = tradosStudioConfigFile.SelectSingleNode(Constants.BestMatchServiceUrlsConfigNode);
 
             var configuration = oldBestMatchServiceSettings.ParentNode;
-
-            configuration.InsertBefore(tradosStudioConfigFile.ImportNode(newLanguageCloudSyncConfig, true), oldLanguageCloudSyncConfig);
-            configuration.RemoveChild(oldLanguageCloudSyncConfig);
-
+            if (!installLocation.Contains("Studio16"))
+            {
+                configuration.InsertBefore(tradosStudioConfigFile.ImportNode(newLanguageCloudSyncConfig, true), oldLanguageCloudSyncConfig);
+                configuration.RemoveChild(oldLanguageCloudSyncConfig);
+            }
+            
             configuration.InsertBefore(tradosStudioConfigFile.ImportNode(newBestMatchServiceSettings, true), oldBestMatchServiceSettings);
             configuration.RemoveChild(oldBestMatchServiceSettings);
 
