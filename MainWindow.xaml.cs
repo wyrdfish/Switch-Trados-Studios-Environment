@@ -13,30 +13,28 @@ namespace Switch_Trados_Studios_Environment
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
-        private readonly OverwriteStudioEnvironment _overwriteStudioEnvironment = new OverwriteStudioEnvironment();
+        private readonly OverwriteStudioEnvironment overwriteStudioEnvironment = new OverwriteStudioEnvironment();
+        private readonly InstalledBuilds installedBuilds = new InstalledBuilds();
+        private readonly StudioProcess studioProcess = new StudioProcess();
+        private readonly EnvironmentFiles environmentFiles = new EnvironmentFiles();
+        private readonly LanguageCloudConfig languageCloudConfig = new LanguageCloudConfig();
 
         public MainWindow()
         {
             InitializeComponent();
-            _overwriteStudioEnvironment.PopulateEnvironmentDictionaries();
-            _overwriteStudioEnvironment.PopulateStudioDictionaries();
-
-            var availableStudioBuilds = _overwriteStudioEnvironment.GetListOfInstalledTradosStudioBuilds();
             
-            foreach (string build in availableStudioBuilds)
+            foreach (string build in installedBuilds.listOfInstalledBuilds)
             {
                 ComboBoxItem comboBoxItem = new ComboBoxItem();
                 comboBoxItem.Background = Brushes.White;
                 comboBoxItem.Content = build;
                 StudioBuildType.Items.Add(comboBoxItem);
             }
-            if (availableStudioBuilds.Count == 1)
+            if (installedBuilds.listOfInstalledBuilds.Count == 1)
             {
                 StudioBuildType.SelectedIndex = 0;
             }
-            else if (availableStudioBuilds.Count == 0)
+            else if (installedBuilds.listOfInstalledBuilds.Count == 0)
             {
                 const string message = "There isn't any Trados Studio Build installed\n\nPlease Install one and restart the tool or add a custom path";
                 Status.Visibility = Visibility.Visible;
@@ -45,7 +43,7 @@ namespace Switch_Trados_Studios_Environment
                 SwitchEnvironmentButton.IsEnabled = false;
             }
 
-            string environmentFolderPath = _overwriteStudioEnvironment.GetEnvironmentFolder();
+            string environmentFolderPath = new EnvironmentFiles().environmentFolderPath;
             var environmentConfigFiles = Directory.GetFiles(environmentFolderPath);
 
             foreach (string environmentFile in environmentConfigFiles)
@@ -62,7 +60,7 @@ namespace Switch_Trados_Studios_Environment
         {
             var studioIndex = StudioBuildType.SelectedIndex;
             var environmentIndex = EnvironmentType.SelectedIndex;
-            var studioProcesses = _overwriteStudioEnvironment.GetStudioProcesses();
+            var studioProcesses = studioProcess.GetStudioProcesses();
 
             if (studioIndex == -1 || environmentIndex == -1)
             {
@@ -82,16 +80,16 @@ namespace Switch_Trados_Studios_Environment
                 {
                     return;
                 }
-                _overwriteStudioEnvironment.CloseStudio(studioProcesses);
+                studioProcess.CloseStudio(studioProcesses);
             }
 
-            _overwriteStudioEnvironment.DeleteLanguageCloudLoggedInCofig(studioIndex);
+            languageCloudConfig.DeleteLanguageCloudConfig(studioIndex);
 
             SwitchEnvironmentButton.IsEnabled = false;
             try
             {
                 string message = string.Format("Success:\n\n{0} has been changed to the {1}", StudioBuildType.Text, EnvironmentType.Text);
-                _overwriteStudioEnvironment.SwitchStudiosLcEnvironment(studioIndex, environmentIndex);
+                overwriteStudioEnvironment.SwitchStudiosLcEnvironment(studioIndex, environmentIndex);
                 Status.Visibility = Visibility.Visible;
                 Status.Text = message;
                 Status.Foreground = Brushes.Green;
@@ -107,10 +105,10 @@ namespace Switch_Trados_Studios_Environment
 
         private void CustomLocation_Click(object sender, RoutedEventArgs e)
         {
-            string customLocation = _overwriteStudioEnvironment.ChooseCustomLocation();
+            string customLocation = environmentFiles.AddCustomLocation();
             if (customLocation != string.Empty)
             {
-                bool customPathAdded = _overwriteStudioEnvironment.AddCustomBuildPathToDictionary(customLocation);
+                bool customPathAdded = AddCustomBuildPathToDictionary(customLocation);
                 if (customPathAdded)
                 {
                     StudioBuildType.Items.Add(customLocation);
@@ -118,6 +116,18 @@ namespace Switch_Trados_Studios_Environment
                 StudioBuildType.SelectedItem = customLocation;
                 SwitchEnvironmentButton.IsEnabled = true;
             }
+        }
+
+        private bool AddCustomBuildPathToDictionary(string customPath)
+        {
+            bool valueExists = installedBuilds.studioBuildTypeDictionary.Values.Contains<string>(customPath);
+            if (!valueExists)
+            {
+                int Key = installedBuilds.studioBuildTypeDictionary.Count;
+                overwriteStudioEnvironment.installedBuilds.studioBuildTypeDictionary.Add(Key, customPath);
+                return true;
+            }
+            return false;
         }
     }
 }

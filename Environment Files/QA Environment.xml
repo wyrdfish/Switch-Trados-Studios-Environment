@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
+<LanguageCloudSyncConfig HubName="/ProjectsHub" HubUrlRoot="https://qa-studio-push-notification.sdl.com" HubConnectionTimeout="120000" />
 <BestMatchServiceSettings>
     <tracking>
       <setting name="applicationKey" value="n6JUV2wjQeKOVB0muXqL0Q%3D%3D"/>
