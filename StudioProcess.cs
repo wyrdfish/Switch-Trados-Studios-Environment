@@ -24,6 +24,5 @@ namespace Switch_Trados_Studios_Environment
             var runningProcesses = Process.GetProcessesByName("SDLTradosStudio");
             return runningProcesses.Where(p => !p.HasExited).ToArray();
         }
-
     }
 }
