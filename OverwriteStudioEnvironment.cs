@@ -13,18 +13,19 @@ namespace Switch_Trados_Studios_Environment
         EnvironmentFiles environmentFiles = new EnvironmentFiles();
         ApplicationKey applicationKey = new ApplicationKey();
 
-        public void SwitchStudiosLcEnvironment(int selectedStudioTypIndexe, int environment)
+        public void SwitchStudiosLcEnvironment(int selectedStudioTypeIndexe, int environment)
         {
             XmlDocument bestMatchServicesSettings = new XmlDocument();
             bestMatchServicesSettings.Load(environmentFiles.GetPathToTheSpecificEnvironmentFile(environment));
             var newLanguageCloudSyncConfig = bestMatchServicesSettings.SelectSingleNode(Constants.LanguageCloudSyncConfigNode);
             var newBestMatchServiceSettings = bestMatchServicesSettings.SelectSingleNode(Constants.BestMatchServiceSettingsNode);
             var newBestMatchServiceUrlConfig = bestMatchServicesSettings.SelectSingleNode(Constants.BestMatchServiceUrlsConfigNode);
-            var installLocation = new InstallPath(installedBuilds.studioBuildTypeDictionary[selectedStudioTypIndexe]).installLocation;
+            var selectedStudioType = installedBuilds.studioBuildTypeDictionary[selectedStudioTypeIndexe];
+            var installLocation = selectedStudioType.Contains("\\") ? selectedStudioType : new InstallPath(selectedStudioType).installLocation;
 
             XmlDocument tradosStudioConfigFile = new XmlDocument();
-            string lcEnvironmentFilePath = installedBuilds.nrOfInstalledBuilds <= selectedStudioTypIndexe ?
-                installedBuilds.studioBuildTypeDictionary[selectedStudioTypIndexe] : 
+            string lcEnvironmentFilePath = installedBuilds.nrOfInstalledBuilds <= selectedStudioTypeIndexe ?
+                installedBuilds.studioBuildTypeDictionary[selectedStudioTypeIndexe] : 
                 Path.Combine(installLocation, Constants.TradosStudioConfigFile);
             
             tradosStudioConfigFile.Load(lcEnvironmentFilePath);

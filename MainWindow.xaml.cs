@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -128,6 +129,15 @@ namespace Switch_Trados_Studios_Environment
                 return true;
             }
             return false;
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://confluence.sdl.com/pages/viewpage.action?spaceKey=LTSTUDIO&title=Switch+Trados+Studio%27s+Environment",
+                UseShellExecute = true
+            });
         }
     }
 }
