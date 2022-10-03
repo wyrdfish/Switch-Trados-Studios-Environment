@@ -33,6 +33,24 @@
     <Resource Include="Switch.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Environment Files\Production Environment.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Environment Files\PTE Environment.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Environment Files\QA Environment.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Environment Files\Staging Environment.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Environment Files\UAT Environment.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /i /y &quot;$(ProjectDir)Environment Files&quot; &quot;$(ProjectDir)$(OutDir)Environment Files&quot;" />
   </Target>

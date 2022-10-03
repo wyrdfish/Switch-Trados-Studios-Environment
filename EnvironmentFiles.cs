@@ -15,7 +15,8 @@ namespace Switch_Trados_Studios_Environment
 
         internal EnvironmentFiles()
         {
-            environmentFolderPath = Path.Combine(Environment.CurrentDirectory, @"Environment Files\");
+            
+            environmentFolderPath = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath), @"Environment Files\");
             PopulateEnvironmentDictionaries();
         }
 

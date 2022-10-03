@@ -122,11 +122,6 @@
     <Content Include="Images\Wide310x150Logo.scale-150.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
     <Content Include="Images\Wide310x150Logo.scale-400.png" />
-    <None Include="Environment Files\Production Environment.xml" />
-    <None Include="Environment Files\PTE Environment.xml" />
-    <None Include="Environment Files\QA Environment.xml" />
-    <None Include="Environment Files\Staging Environment.xml" />
-    <None Include="Environment Files\UAT Environment.xml" />
     <None Include="SwitchEnvironmentInstaller_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
