@@ -87,10 +87,11 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+    - name: build exe
+      run: dotnet build
+
     - name: get azure signtool
       run: dotnet tool install --global azuresigntool --version 3.0.0
-
-
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app and package
@@ -101,9 +102,6 @@ jobs:
         Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
 
-    # Remove the pfx
-    - name: Remove the pfx
-      run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
