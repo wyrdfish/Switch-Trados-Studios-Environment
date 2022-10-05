@@ -57,7 +57,7 @@ jobs:
 
     env:
       Solution_Name: Switch Trados Studios Environment.sln
-      Test_Project_Path: your-test-project-path                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      exe_Project_Name: Switch Trados Studios Environment.csproj                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       Wap_Project_Directory: SwitchEnvironmentInstaller    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
       Wap_Project_Path: SwitchEnvironmentInstaller\SwitchEnvironmentInstaller.wapproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
 
@@ -88,7 +88,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: build exe
-      run: dotnet build $env:Solution_Name
+      run: dotnet build $env:exe_Project_Name
 
     - name: get azure signtool
       run: dotnet tool install --global azuresigntool --version 3.0.0
