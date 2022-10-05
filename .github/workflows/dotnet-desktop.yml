@@ -93,7 +93,7 @@ jobs:
 
 
     # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Create the app package
+    - name: Create the app and package
       run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle
       env:
         Appx_Bundle: Always

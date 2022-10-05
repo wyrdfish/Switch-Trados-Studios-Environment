@@ -54,9 +54,8 @@
     <TargetPlatformVersion>10.0.20348.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
-    <PackageCertificateThumbprint>CC3357602A13C5B52BE80FBEC47104BA7F6BE046</PackageCertificateThumbprint>
     <EntryPointProjectUniqueName>..\Switch Trados Studios Environment.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <ItemGroup>
