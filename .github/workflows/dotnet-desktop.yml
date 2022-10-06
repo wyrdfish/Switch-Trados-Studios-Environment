@@ -90,11 +90,22 @@ jobs:
     - name: build exe
       run: dotnet build $env:exe_Project_Name
 
+    # https://learn.microsoft.com/en-us/windows/msix/desktop/cicd-keyvault
+
     - name: get azure signtool
       run: dotnet tool install --global azuresigntool --version 3.0.0
 
+
+    - name: Sign the exe
+      run: |
+        Get-ChildItem -recurse -Include **.exe | ForEach-Object {
+        $exePath = $_.FullName
+        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $exePath
+        }
+
+
     # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Create the app and package
+    - name: Create the package
       run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle
       env:
         Appx_Bundle: Always
@@ -102,6 +113,12 @@ jobs:
         Appx_Package_Build_Mode: StoreUpload
         Configuration: ${{ matrix.configuration }}
 
+    - name: Sign the msix
+      run: |
+        Get-ChildItem -recurse -Include **.exe | ForEach-Object {
+        $msixPath = $_.FullName
+        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $msixPath
+        }
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
