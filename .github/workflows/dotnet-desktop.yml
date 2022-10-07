@@ -100,7 +100,7 @@ jobs:
       run: |
         Get-ChildItem -recurse -Include **.exe | ForEach-Object {
         $exePath = $_.FullName
-        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $exePath
+        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvt "${{ secrets.AzureKeyVaultTenantId }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $exePath
         }
 
 
@@ -117,7 +117,7 @@ jobs:
       run: |
         Get-ChildItem -recurse -Include **.exe | ForEach-Object {
         $msixPath = $_.FullName
-        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $msixPath
+        & AzureSignTool sign -kvu "${{ secrets.AzureKeyVaultUrl }}" -kvt "${{ secrets.AzureKeyVaultTenantId }}" -kvi "${{ secrets.AzureKeyVaultClientId }}" -kvs "${{ secrets.AzureKeyVaultClientSecret }}" -kvc ${{ secrets.AzureKeyVaultName }} -tr http://timestamp.digicert.com -v $msixPath
         }
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
